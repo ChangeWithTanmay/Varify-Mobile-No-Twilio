@@ -25,9 +25,9 @@ const sendSMS = async (body, Number) => {
                 body
             }
             console.log(mesOption);
-            // const message = await client.messages.create(mesOption);
+            const message = await client.messages.create(mesOption);
             // console.log(message);
-            // console.log("\n\n\n✅ Message Sent! SID:", message.sid);
+            console.log("\n\n\n✅ Message Sent! SID:", message.sid);
         }
         else{
             console.log("❌ Please Enter valid Number..");
