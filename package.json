@@ -5,7 +5,7 @@
   "keywords": [],
   "license": "ISC",
   "author": "Tanmay Das",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
