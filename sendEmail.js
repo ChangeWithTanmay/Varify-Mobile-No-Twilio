@@ -12,25 +12,25 @@ const generateOtp = () => Math.floor(100000 + Math.random() * 900000);
 
 const transporter = nodemailer.createTransport({
     secure: true,
-    host: "smtp.gmail.com", 
-    port:  465,
+    host: "smtp.gmail.com",
+    port: 465,
     auth: {
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASSWORD
     },
     tls: {
-        rejectUnauthorized: true, 
+        rejectUnauthorized: true,
         minVersion: "TLSv1.2"
     }
 });
 
 
-const sendOTP =  async(email) =>{
+const sendOTP = async (email) => {
     // OTP Valid Time
-    const expiresAt = Date.now()+5*60*1000;
+    const expiresAt = Date.now() + 5 * 60 * 1000;
     const otp = generateOtp();
 
-    otpStore.set(email, {otp, expiresAt})
+    otpStore.set(email, { otp, expiresAt })
 
     const mailOptions = {
         from: process.env.EMAIL_ADDRESS,
@@ -38,21 +38,31 @@ const sendOTP =  async(email) =>{
         subject: "Vectosmind your varification code",
         // text: `Your OTP is: ${otp}. It is valid for 5 minutes.`,
         html: `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center;">
-        <img src="https://yourwebsite.com/logo.png" width="150" alt="Brand Logo">
-        <h2 style="color: #333;">Your OTP Code</h2>
-        <p style="font-size: 18px; color: #555;">Use the following OTP to verify your email:</p>
-        <div style="font-size: 24px; font-weight: bold; color: #007bff; padding: 10px; background: #f1f1f1; display: inline-block; border-radius: 5px;">
-            ${otp}
-        </div>
-        <p style="font-size: 14px; color: #777; margin-top: 20px;">This OTP is valid for 5 minutes.</p>
-        <a href="https://your-website.com/verify?otp=${otp}" 
-           style="display: inline-block; padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none; font-size: 16px; border-radius: 5px; margin-top: 10px;">
-           Verify Now
-        </a>
-        <p style="font-size: 12px; color: #999; margin-top: 20px;">If you did not request this, please ignore this email.</p>
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; border-radius: 8px; background-color: #ffffff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    <div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; margin-bottom: 20px;">
+        DOCTOR.<br>GO
     </div>
-        `
+    <div style="font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+        Verify your account
+    </div>
+    <div style="font-family: Arial, sans-serif; font-size: 32px; font-weight: bold; margin: 10px 0;">
+        ${otp}
+    </div>
+    <div style="font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 20px;">
+        Please use this code to verify your email and complete your account set up. The code will be valid for the next 5 minutes.
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        <a href="#" style="text-decoration: none; color: #000;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4d6wyiCpO9m-kdAnWIgeJTPFxsxZZf0GauQ&s" alt="Twitter" style="width: 24px; height: 24px;">
+        </a>
+        <a href="#" style="text-decoration: none; color: #000;">
+            <img src="https://img.freepik.com/premium-psd/3d-instagram-icon-psd_1073073-2126.jpg?semt=ais_hybrid" alt="Instagram" style="width: 24px; height: 24px;">
+        </a>
+        <a href="#" style="text-decoration: none; color: #000;">
+            <img src="https://i.pinimg.com/236x/68/8f/48/688f48f357a41ed19f24b79cd3aa4721.jpg" alt="Facebook" style="width: 24px; height: 24px;">
+        </a>
+    </div>
+</div>`
     };
 
     try {
